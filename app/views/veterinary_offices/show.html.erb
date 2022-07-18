@@ -4,3 +4,4 @@
 <%= link_to "All veterinarians at #{@veterinary_office.name}", "/veterinary_offices/#{@veterinary_office.id}/veterinarians" %>
 
 <p><%= link_to "Delete #{@veterinary_office.name}", "/veterinary_offices/#{@veterinary_office.id}", method: :delete %></p>
+<%= render "shared/footer" %>
