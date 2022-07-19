@@ -13,4 +13,13 @@ class Application < ApplicationRecord
   def has_pets?
     pets.length > 0
   end
+
+  def complete_application
+    statuses = pet_applications.pluck(:pet_status)
+    if statuses.include?('rejected')
+      update(status: 'Rejected')
+    else
+      update(status: 'Approved')
+    end
+  end
 end
