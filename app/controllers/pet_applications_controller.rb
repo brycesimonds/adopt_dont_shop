@@ -10,9 +10,8 @@ class PetApplicationsController < ApplicationController
         app = Application.find(params[:application_id])
         pet_application = app.pet_applications.find_by(pet_id: params[:pet_id].to_i)
         pet_application.update(pet_status: params[:pet_status])
+        app.complete_application unless app.pet_applications.pluck(:pet_status).include?(nil)
+
         redirect_to "/admin/applications/#{app.id}"
-      end
+    end
 end
-
-
-
