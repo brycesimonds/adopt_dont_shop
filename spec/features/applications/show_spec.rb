@@ -334,4 +334,51 @@ RSpec.describe 'the application show' do
       expect(page).to have_button("Reject")
     end 
   end
+  it 'approving all pets accepts the application' do
+    application = Application.create!(name: 'John Doe', street_address: '123 apple street', city: 'Denver', state: 'CO', zipcode: '90210', description: 'we love pets', status: 'In Progress')
+    shelter = Shelter.create!(name: 'Mystery Building', city: 'Irvine CA', foster_program: false, rank: 9)
+    scooby = Pet.create!(name: 'Scooby', age: 2, breed: 'Great Dane', adoptable: true, shelter_id: shelter.id)
+    clifford = Pet.create!(name: 'Clifford', age: 1, breed: 'Red Dog', adoptable: true, shelter_id: shelter.id)
+
+    PetApplication.create!(pet: scooby, application: application)
+    PetApplication.create!(pet: clifford, application: application)
+
+    visit "/admin/applications/#{application.id}"
+
+    within "#pets-#{scooby.id}" do 
+      click_on("Approve")
+    end  
+
+    within "#pets-#{clifford.id}" do 
+      click_on("Approve")
+    end 
+    # binding.pry
+    within "#application_details" do 
+      expect(page).to have_content("Approved")
+    end
+  end
+
+  it 'rejecting one pet rejects the application' do
+    application = Application.create!(name: 'John Doe', street_address: '123 apple street', city: 'Denver', state: 'CO', zipcode: '90210', description: 'we love pets', status: 'In Progress')
+    shelter = Shelter.create!(name: 'Mystery Building', city: 'Irvine CA', foster_program: false, rank: 9)
+    scooby = Pet.create!(name: 'Scooby', age: 2, breed: 'Great Dane', adoptable: true, shelter_id: shelter.id)
+    clifford = Pet.create!(name: 'Clifford', age: 1, breed: 'Red Dog', adoptable: true, shelter_id: shelter.id)
+
+    PetApplication.create!(pet: scooby, application: application)
+    PetApplication.create!(pet: clifford, application: application)
+
+    visit "/admin/applications/#{application.id}"
+
+    within "#pets-#{scooby.id}" do 
+      click_on("Approve")
+    end  
+
+    within "#pets-#{clifford.id}" do 
+      click_on("Reject")
+    end 
+    # binding.pry
+    within "#application_details" do 
+      expect(page).to have_content("Rejected")
+    end
+  end
 end
