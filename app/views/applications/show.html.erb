@@ -1,10 +1,13 @@
 <h1>Application Show Page</h1>
-<h2><%= @application.name %></h2>
-<h3><%= @application.street_address %></h3>
-<h3><%= @application.city %></h3>
-<h3><%= @application.state %></h3>
-<h3><%= @application.zipcode %></h3>
-<h3><%= @application.description %></h3>
+<div id="application_details" >
+    <h2><%= @application.name %></h2>
+    <h3><%= @application.street_address %></h3>
+    <h3><%= @application.city %></h3>
+    <h3><%= @application.state %></h3>
+    <h3><%= @application.zipcode %></h3>
+    <h3><%= @application.description %></h3>
+    <h3><%= @application.status %></h3>
+</div>
 
 <div id="pets_in_application">
     <% @application.pets.each do |pet|%>
@@ -24,9 +27,6 @@
         </div>
     <% end %>
 </div>
-
-<h3><%= @application.status %></h3>
-
 
 <% if @application.has_pets? && @application.status == "In Progress"%>
     <div id="submit_application">
