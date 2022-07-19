@@ -47,5 +47,13 @@ RSpec.describe Pet, type: :model do
         expect(@pet_3.shelter_name).to eq(@shelter_1.name)
       end
     end
+
+    it 'unadoptable changes the adoptable attribute to false' do
+      expect(@pet_1.adoptable).to eq(true)
+
+      @pet_1.unadoptable
+
+      expect(@pet_1.adoptable).to eq(false)
+    end
   end
 end

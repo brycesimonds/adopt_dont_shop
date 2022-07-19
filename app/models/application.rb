@@ -20,6 +20,9 @@ class Application < ApplicationRecord
       update(status: 'Rejected')
     else
       update(status: 'Approved')
+      pets.each do |pet|
+        pet.unadoptable
+      end
     end
   end
 end
